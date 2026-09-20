@@ -27,4 +27,17 @@ public class GlobalExceptionHandler {
                         .timestamp(LocalDateTime.now())
                         .build());
     }
+
+    @ExceptionHandler(DocumentProcessingException.class)
+    public ResponseEntity<?> handleProcessingError(DocumentProcessingException ex){
+        logger.warn("Document Processing Error : {}", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT)
+                .body(ApiResponse.builder()
+                        .success(false)
+                        .message(ex.getMessage())
+                        .data(null)
+                        .timestamp(LocalDateTime.now())
+                        .build());
+    }
 }
