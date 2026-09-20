@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.time.LocalDateTime;
 
@@ -36,6 +37,19 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.builder()
                         .success(false)
                         .message(ex.getMessage())
+                        .data(null)
+                        .timestamp(LocalDateTime.now())
+                        .build());
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<?> handleMaxSize(MaxUploadSizeExceededException ex){
+        logger.warn("File size limit exceeded : {}", ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONTENT_TOO_LARGE)
+                .body(ApiResponse.builder()
+                        .success(false)
+                        .message("FILE SIZE LIMIT EXCEEDED (25MB)")
                         .data(null)
                         .timestamp(LocalDateTime.now())
                         .build());
