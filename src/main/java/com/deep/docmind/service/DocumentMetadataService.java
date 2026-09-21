@@ -30,7 +30,7 @@ public class DocumentMetadataService {
         String contentType = file.getContentType() != null ? file.getContentType() : "application/octat-stream";
 
         // document meta data
-        DocumentMetadata documentMetadata = DocumentMetadata
+        DocumentMetaData documentMetadata = DocumentMetadata
                 .builder()
                 .filename(filename)
                 .contentType(contentType)
