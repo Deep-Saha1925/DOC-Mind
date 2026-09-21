@@ -5,6 +5,7 @@ import com.deep.docmind.entity.DocumentMetaData;
 import com.deep.docmind.entity.DocumentStatus;
 import com.deep.docmind.exception.DocumentProcessingException;
 import com.deep.docmind.repository.DocumentMetadataRepo;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
@@ -17,12 +18,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DocumentMetadataService {
 
     private static final Logger log = LoggerFactory.getLogger(DocumentMetadataService.class);
 
     private final DocumentMetadataRepo documentMetadataRepo;
     private final JdbcTemplate jdbcTemplate;
+    private final DocumentParserService documentParserService;
+    private final DocumentIngestionService documentIngestionService;
 
     public DocumentResponseDto uploadAndProcess(MultipartFile file) {
 
@@ -46,10 +50,10 @@ public class DocumentMetadataService {
 
         try {
             //parse the file
-            parsedDocs = parserService.parse(file);
+            parsedDocs = documentParserService.parse(file);
 
             //ingest service
-            chunksCreated = ingestionService.ingest(documentMetadata, parsedDocs);
+            chunksCreated = documentIngestionService.ingest(documentMetadata, parsedDocs);
         } catch (
                 DocumentProcessingException e
         ) {
