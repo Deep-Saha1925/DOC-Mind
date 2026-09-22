@@ -3,7 +3,6 @@ package com.deep.docmind.service;
 
 import com.deep.docmind.config.AppProperties;
 import com.deep.docmind.entity.DocumentMetaData;
-import com.deep.docmind.entity.DocumentMetaDataata;
 import com.deep.docmind.entity.DocumentStatus;
 import com.deep.docmind.exception.DocumentProcessingException;
 import com.deep.docmind.repository.DocumentMetadataRepo;
