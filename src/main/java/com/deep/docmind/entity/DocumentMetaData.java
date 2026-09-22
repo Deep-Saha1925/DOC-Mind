@@ -19,7 +19,7 @@ public class DocumentMetaData {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(unique = false)
     private String filename;
 
     @Column(nullable = false)
@@ -37,6 +37,10 @@ public class DocumentMetaData {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
 
 }
