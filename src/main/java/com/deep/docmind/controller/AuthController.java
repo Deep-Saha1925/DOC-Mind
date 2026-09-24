@@ -1,8 +1,13 @@
 package com.deep.docmind.controller;
 
+import com.deep.docmind.entity.User;
 import com.deep.docmind.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,6 +21,18 @@ public class AuthController {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody LoginRequest loginRequest
+    ) {
 
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                loginRequest.username(),
+                loginRequest.password()
+        );
+
+        Authentication authenticated = authenticationManager.authenticate(authentication);
+        User user = userRepository.findByUsername(loginRequest.username())orElseThrow(() -> new RuntimeException("User not found"));
+    }
 
 }
