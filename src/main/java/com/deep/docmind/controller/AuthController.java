@@ -1,8 +1,10 @@
 package com.deep.docmind.controller;
 
+import com.deep.docmind.dto.UserDto;
 import com.deep.docmind.entity.User;
 import com.deep.docmind.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,6 +35,10 @@ public class AuthController {
 
         Authentication authenticated = authenticationManager.authenticate(authentication);
         User user = userRepository.findByUsername(loginRequest.username())orElseThrow(() -> new RuntimeException("User not found"));
+
+        String token = jwtService.generateToken(new CustomUserDetail(user));
+        var response = new LoginResponse(token, new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getRole()));
+        return ResponseEntity.ok(response);
     }
 
 }
