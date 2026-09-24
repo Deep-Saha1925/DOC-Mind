@@ -3,7 +3,9 @@ package com.deep.docmind.controller;
 import com.deep.docmind.dto.UserDto;
 import com.deep.docmind.entity.User;
 import com.deep.docmind.repository.UserRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,5 +42,11 @@ public class AuthController {
         var response = new LoginResponse(token, new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.getRole()));
         return ResponseEntity.ok(response);
     }
-
+    @PostMapping("/register")
+    public ResponseEntity<UserDto> register(
+            @Valid @RequestBody RegisterUserRequest registerUserRequest
+    ) {
+        UserDto userDto = userService.registerUser(registerUserRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDto);
+    }
 }
