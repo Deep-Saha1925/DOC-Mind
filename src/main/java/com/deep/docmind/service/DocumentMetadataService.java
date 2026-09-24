@@ -1,11 +1,16 @@
 package com.deep.docmind.service;
 
+import com.deep.docmind.dto.DocumentMetadataDto;
 import com.deep.docmind.dto.DocumentResponseDto;
 import com.deep.docmind.entity.DocumentMetaData;
 import com.deep.docmind.entity.DocumentStatus;
+import com.deep.docmind.entity.User;
 import com.deep.docmind.exception.DocumentProcessingException;
+import com.deep.docmind.exception.ResourceNotFoundException;
 import com.deep.docmind.repository.DocumentMetadataRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.document.Document;
@@ -15,7 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,19 +31,24 @@ public class DocumentMetadataService {
     private static final Logger log = LoggerFactory.getLogger(DocumentMetadataService.class);
 
     private final DocumentMetadataRepo documentMetadataRepo;
+    private final DocumentParserService parserService;
+    private final DocumentIngestionService ingestionService;
+    private final ModelMapper modelMapper;
     private final JdbcTemplate jdbcTemplate;
-    private final DocumentParserService documentParserService;
-    private final DocumentIngestionService documentIngestionService;
 
-    public DocumentResponseDto uploadAndProcess(MultipartFile file) {
 
-        String filename = file.getOriginalFilename() != null ? file.getOriginalFilename() : "docuemnt";
+    //method to upload and parse document
+    @Transactional
+    public DocumentResponseDto uploadAndProcess(MultipartFile file, User user) {
+
+        String fileName = file.getOriginalFilename() != null ? file.getOriginalFilename() : "document";
         String contentType = file.getContentType() != null ? file.getContentType() : "application/octat-stream";
 
-        // document meta data
-        DocumentMetaData documentMetadata = DocumentMetadata
+        //document meta data create
+        //storing the user detail with document metadata
+        DocumentMetaData documentMetadata = DocumentMetaData
                 .builder()
-                .filename(filename)
+                .filename(fileName)
                 .contentType(contentType)
                 .status(DocumentStatus.UPLOADING)
                 .fileSize(file.getSize())
@@ -50,10 +62,10 @@ public class DocumentMetadataService {
 
         try {
             //parse the file
-            parsedDocs = documentParserService.parse(file);
+            parsedDocs = parserService.parse(file);
 
             //ingest service
-            chunksCreated = documentIngestionService.ingest(documentMetadata, parsedDocs);
+            chunksCreated = ingestionService.ingest(documentMetadata, parsedDocs);
         } catch (
                 DocumentProcessingException e
         ) {
@@ -66,7 +78,6 @@ public class DocumentMetadataService {
         //documentMetadata.setTotalChunks(chunksCreated);
         //save the document metadata
 
-
         return DocumentResponseDto.builder()
                 .id(documentMetadata.getId())
                 .fileName(documentMetadata.getFilename())
@@ -77,5 +88,56 @@ public class DocumentMetadataService {
                 .userId(user.getId())
                 .build();
 
+    }
+
+    public List<DocumentResponseDto> uploadMultipleDocuments(List<MultipartFile> files, User user) {
+
+        List<DocumentResponseDto> responseDtos = new ArrayList<>();
+
+        for (MultipartFile file : files) {
+            DocumentResponseDto result = this.uploadAndProcess(file, user);
+            responseDtos.add(result);
+        }
+        return responseDtos;
+    }
+
+
+    //    to get all the documents: This method is useful for admin
+    public List<DocumentMetadataDto> getAllDocuments() {
+
+        List<DocumentMetaData> allDocuments = documentMetadataRepo.findAllByOrderByCreatedAtDesc();
+        return allDocuments.stream()
+                .map(documentMetadata -> modelMapper.map(documentMetadata, DocumentMetadataDto.class))
+                .toList();
+
+    }
+
+    public List<DocumentMetadataDto> getAllDocumentsByUser(User user) {
+        List<DocumentMetaData> documents = documentMetadataRepo.findByUserOrderByCreatedAtDesc(user);
+        return documents.stream()
+                .map(documentMetadata -> modelMapper.map(documentMetadata, DocumentMetadataDto.class))
+                .toList();
+    }
+
+    public DocumentMetadataDto getDocumentById(UUID id) {
+        DocumentMetaData documentMetadata = documentMetadataRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Document with given id not found !!"));
+        return modelMapper.map(documentMetadata, DocumentMetadataDto.class);
+
+    }
+
+    @Transactional
+    public void deleteDocument(UUID id) {
+        DocumentMetaData documentMetadata = documentMetadataRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Document with given id not found !!"));
+
+        documentMetadataRepo.delete(documentMetadata);
+        //delete the vector entries
+        try {
+            String deleteVectorsSql = "DELETE FROM vector_store WHERE metadata->>'documentId' = ?";
+            int deletedCount = jdbcTemplate.update(deleteVectorsSql, id.toString());
+            log.info("Deleted {} vector chunks for document id {} ", deletedCount, id);
+
+        } catch (Exception e) {
+            log.warn("cloud not delete vectors from vector store directly: {}", e.getMessage());
+        }
     }
 }
