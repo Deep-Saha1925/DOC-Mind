@@ -102,8 +102,5 @@ public class DocumentIngestionService {
             documentMetadataRepo.save(metadata);
             throw new DocumentProcessingException("Failed to index document: " + ex.getMessage(), ex);
         }
-
-
-
     }
 }
