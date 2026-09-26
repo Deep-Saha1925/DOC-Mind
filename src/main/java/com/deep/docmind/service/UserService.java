@@ -1,4 +1,4 @@
-package com.substring.docmind.service;
+package com.deep.docmind.service;
 
 import com.deep.docmind.dto.RegisterUserRequest;
 import com.deep.docmind.dto.UserDto;
