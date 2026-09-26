@@ -87,9 +87,6 @@ public class DocumentController {
                 );
     }
 
-
-
-
     //    list all uploaded documents of logged in user
     @GetMapping("/user")
     @Operation(summary = "List all uploaded documents and their indexing status of the logged user")
