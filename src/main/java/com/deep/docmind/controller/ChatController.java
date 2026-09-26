@@ -1,8 +1,6 @@
 package com.deep.docmind.controller;
 
-import com.deep.docmind.dto.ApiResponse;
-import com.deep.docmind.dto.ChatRequestDto;
-import com.deep.docmind.dto.ChatResponseDto;
+import com.deep.docmind.dto.*;
 import com.deep.docmind.entity.User;
 import com.deep.docmind.service.RagService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,8 +59,23 @@ public class ChatController {
         return ragService.streamQuestionAnswer(requestDto, user);
     }
 
-    public ResponseEntity<String> chat(){
-        return ResponseEntity.ok("CHATTING");
+    @PostMapping("/search/similarity")
+    @Operation(summary = "Perform semantic similarity search on stored document vectors")
+    public ResponseEntity<ApiResponse<SearchResultDto>> searchSimilar(
+            @Valid @RequestBody SearchRequestDto request,
+            Authentication authentication
+    ){
+        User user= (User) authentication.getPrincipal();
+        SearchResultDto results = ragService.searchSimilarChunks(request,user);
+        return ResponseEntity.ok(
+                ApiResponse.
+                        <SearchResultDto>
+                        builder()
+                        .success(true)
+                        .message(null)
+                        .data(results)
+                        .timestamp(LocalDateTime.now())
+                        .build()
+        );
     }
-
 }
