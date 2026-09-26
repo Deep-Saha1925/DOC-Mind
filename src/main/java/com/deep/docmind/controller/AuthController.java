@@ -7,6 +7,8 @@ import com.deep.docmind.dto.UserDto;
 import com.deep.docmind.entity.User;
 import com.deep.docmind.repository.UserRepository;
 import com.deep.docmind.service.CustomUserDetail;
+import com.deep.docmind.service.JwtService;
+import com.deep.docmind.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
