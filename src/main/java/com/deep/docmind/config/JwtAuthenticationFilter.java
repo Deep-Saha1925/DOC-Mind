@@ -65,9 +65,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-//        context set karenge
-
-
         filterChain.doFilter(request, response);
     }
 }
