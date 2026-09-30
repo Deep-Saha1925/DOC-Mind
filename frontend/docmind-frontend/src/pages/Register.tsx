@@ -86,7 +86,7 @@ const Register: React.FC = () => {
   return (
     <div className="min-h-screen bg-ink-950 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Background glowing effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-accent-400/10 to-transparent blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gradient-to-tr from-accent-600/15 via-sky-600/10 to-transparent blur-[140px] rounded-full pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}

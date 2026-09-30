@@ -49,9 +49,9 @@ const Navbar: React.FC<NavbarProps> = ({ onUploadClick }) => {
   };
 
   return (
-    <header className="flex items-center h-14 px-2 sm:px-4 bg-ink-950/80 backdrop-blur-xl border-b border-ink-800 flex-shrink-0 z-20">
+    <header className="flex items-center h-14 px-4 bg-ink-950/80 backdrop-blur-xl border-b border-ink-800 flex-shrink-0 z-20">
       {/* Left: sidebar toggle + logo */}
-      <div className="flex items-center gap-2 sm:gap-3 md:w-64 flex-shrink-0">
+      <div className="flex items-center gap-3 w-64 flex-shrink-0">
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           className="p-1.5 hover:bg-ink-800 rounded-lg transition-colors group cursor-pointer"
@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ onUploadClick }) => {
           <div className="w-7 h-7 bg-accent-400 rounded-lg flex items-center justify-center">
             <Brain className="w-4 h-4 text-ink-950" />
           </div>
-          <span className="hidden sm:block font-display text-[22px] leading-none text-white tracking-tight">DocMind</span>
+          <span className="font-display text-[22px] leading-none text-white tracking-tight">DocMind</span>
           <span className="hidden sm:block text-[10px] font-semibold text-accent-400 bg-accent-500/10 border border-accent-500/20 px-1.5 py-0.5 rounded-full">
             AI
           </span>
@@ -72,14 +72,14 @@ const Navbar: React.FC<NavbarProps> = ({ onUploadClick }) => {
       </div>
 
       {/* Center: tab navigation */}
-      <nav className="flex-1 min-w-0 flex items-center justify-center">
+      <nav className="flex-1 flex items-center justify-center">
         <div className="flex items-center gap-0.5 bg-ink-900 border border-ink-800 rounded-full p-1">
           {tabs.map(({ id, label, icon: Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
               className={clsx(
-                'flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-150 cursor-pointer',
+                'flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-150 cursor-pointer',
                 activeTab === id
                   ? 'bg-ink-50 text-ink-950'
                   : 'text-ink-400 hover:text-ink-100'
@@ -93,7 +93,7 @@ const Navbar: React.FC<NavbarProps> = ({ onUploadClick }) => {
       </nav>
 
       {/* Right: document context + upload + user menu */}
-      <div className="flex items-center gap-1.5 sm:gap-2.5 justify-end flex-shrink-0 w-auto md:min-w-[260px]">
+      <div className="flex items-center gap-2.5 justify-end w-auto min-w-[260px]">
         {selectedDoc && (
           <div className="hidden lg:flex items-center gap-1.5 bg-ink-800 border border-ink-700 px-2.5 py-1.5 rounded-lg max-w-[150px]">
             <FileText className="w-3 h-3 text-accent-400 flex-shrink-0" />

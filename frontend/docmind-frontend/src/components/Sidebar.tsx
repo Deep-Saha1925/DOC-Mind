@@ -106,7 +106,7 @@ const DocumentItem: React.FC<{ doc: DocumentMetadataDto }> = ({ doc }) => {
       className={clsx(
         'rounded-xl border transition-all duration-200 overflow-hidden',
         isSelected
-          ? 'border-accent-500/60 bg-accent-500/10'
+          ? 'border-accent-500/60 bg-accent-500/10 shadow-sm shadow-accent-500/10'
           : 'border-ink-800 bg-ink-900/50 hover:border-ink-700 hover:bg-ink-850'
       )}
     >

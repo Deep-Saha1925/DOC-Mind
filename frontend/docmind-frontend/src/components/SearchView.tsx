@@ -18,10 +18,10 @@ const SEARCH_TYPES = [
 ];
 
 const COLOR_MAP: Record<string, string> = {
-  indigo: 'bg-accent-400 text-ink-950',
-  blue: 'bg-ink-600 text-white',
-  emerald: 'bg-ink-600 text-white',
-  purple: 'bg-ink-600 text-white',
+  indigo: 'bg-accent-600 text-white',
+  blue: 'bg-blue-600 text-white',
+  emerald: 'bg-emerald-600 text-white',
+  purple: 'bg-sky-600 text-white',
 };
 
 function getScoreColor(score: number) {
@@ -217,7 +217,7 @@ const SearchView: React.FC = () => {
           <button
             onClick={handleSearch}
             disabled={!query.trim() || isSearching}
-            className="flex items-center gap-2 px-5 py-2.5 bg-accent-400 hover:bg-accent-300 disabled:opacity-50 disabled:saturate-50 text-ink-950 text-sm font-semibold rounded-xl transition-all"
+            className="flex items-center gap-2 px-5 py-2.5 bg-accent-600 hover:bg-accent-500 disabled:opacity-40 text-white text-sm font-medium rounded-xl transition-all shadow-sm shadow-accent-500/30"
           >
             {isSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
             Search

@@ -124,7 +124,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
           <button
             onClick={handleClose}
             disabled={isUploading}
-            className="p-1.5 hover:bg-ink-700 rounded-lg transition-colors text-ink-400 hover:text-white disabled:opacity-50 disabled:saturate-50"
+            className="p-1.5 hover:bg-ink-700 rounded-lg transition-colors text-ink-400 hover:text-white disabled:opacity-40"
           >
             <X className="w-4 h-4" />
           </button>
@@ -144,7 +144,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
             <input {...getInputProps()} />
             {/* Animated background blob */}
             <div className={clsx(
-              'absolute inset-0 bg-gradient-to-br from-accent-500/5 via-transparent to-accent-400/5 transition-opacity duration-300',
+              'absolute inset-0 bg-gradient-to-br from-accent-500/5 via-transparent to-sky-500/5 transition-opacity duration-300',
               isDragActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
             )} />
             <div className="relative flex flex-col items-center gap-3">
@@ -185,7 +185,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
               <button
                 onClick={() => setFiles([])}
                 disabled={isUploading}
-                className="text-xs text-ink-500 hover:text-red-400 flex items-center gap-1 transition-colors disabled:opacity-50 disabled:saturate-50"
+                className="text-xs text-ink-500 hover:text-red-400 flex items-center gap-1 transition-colors disabled:opacity-40"
               >
                 <Trash2 className="w-3 h-3" /> Clear all
               </button>
@@ -255,7 +255,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
             <button
               onClick={handleUpload}
               disabled={isUploading || pendingCount === 0}
-              className="flex items-center gap-2 px-5 py-2 text-sm font-medium bg-accent-400 hover:bg-accent-300 text-ink-950 rounded-xl transition-all disabled:opacity-50 disabled:saturate-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-5 py-2 text-sm font-medium bg-accent-600 hover:bg-accent-500 text-white rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-accent-500/20"
             >
               {isUploading ? (
                 <><Loader2 className="w-4 h-4 animate-spin" /> Uploading…</>

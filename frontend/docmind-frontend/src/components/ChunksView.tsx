@@ -178,7 +178,7 @@ const ChunksView: React.FC = () => {
           <button
             onClick={() => loadChunks()}
             disabled={isLoading}
-            className="flex items-center gap-1.5 text-xs border border-ink-700 hover:border-ink-600 text-ink-400 hover:text-white px-3 py-1.5 rounded-lg transition-colors disabled:opacity-50 disabled:saturate-50"
+            className="flex items-center gap-1.5 text-xs border border-ink-700 hover:border-ink-600 text-ink-400 hover:text-white px-3 py-1.5 rounded-lg transition-colors disabled:opacity-40"
           >
             <RefreshCw className={clsx('w-3.5 h-3.5', isLoading && 'animate-spin')} />
             Refresh
@@ -201,7 +201,7 @@ const ChunksView: React.FC = () => {
           <button
             onClick={() => loadChunks()}
             disabled={isLoading}
-            className="flex items-center gap-2 px-4 py-2 bg-accent-400 hover:bg-accent-300 disabled:opacity-50 disabled:saturate-50 text-ink-950 text-sm font-semibold rounded-xl transition-all"
+            className="flex items-center gap-2 px-4 py-2 bg-accent-600 hover:bg-accent-500 disabled:opacity-40 text-white text-sm font-medium rounded-xl transition-all shadow-sm shadow-accent-500/25"
           >
             {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <BookOpen className="w-4 h-4" />}
             Load
@@ -241,7 +241,7 @@ const ChunksView: React.FC = () => {
             </p>
             <button
               onClick={() => loadChunks()}
-              className="flex items-center gap-2 px-5 py-2.5 bg-accent-400 hover:bg-accent-300 text-ink-950 text-sm font-semibold rounded-xl transition-all"
+              className="flex items-center gap-2 px-5 py-2.5 bg-accent-600 hover:bg-accent-500 text-white text-sm font-medium rounded-xl transition-all shadow-sm shadow-accent-500/25"
             >
               <Layers className="w-4 h-4" /> Load All Chunks
             </button>

@@ -121,7 +121,7 @@ const ChatItem: React.FC<{
       className={clsx(
         'group relative flex items-center justify-between gap-2.5 p-3 rounded-xl border transition-all duration-200 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500',
         isActive
-          ? 'border-accent-500/60 bg-accent-500/10 text-white'
+          ? 'border-accent-500/60 bg-accent-500/10 shadow-sm shadow-accent-500/10 text-white'
           : 'border-ink-800 bg-ink-900/50 hover:border-ink-700 hover:bg-ink-850 text-ink-300 hover:text-white'
       )}
     >
@@ -264,7 +264,7 @@ export const ChatsPanel: React.FC = () => {
         <button
           onClick={handleNewChat}
           aria-label="Start a new chat"
-          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-accent-400 hover:bg-accent-300 active:scale-[0.98] text-ink-950 text-xs sm:text-sm font-semibold rounded-xl transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-accent-600 hover:bg-accent-500 active:scale-[0.98] text-white text-xs sm:text-sm font-medium rounded-xl transition-all shadow-lg shadow-accent-600/20 hover:shadow-accent-600/30 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-500"
         >
           <Plus className="w-4 h-4" />
           <span>New Chat</span>

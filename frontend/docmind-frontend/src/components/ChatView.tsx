@@ -30,9 +30,9 @@ const PROMPT_TEMPLATES = [
   {
     category: 'Summarization',
     icon: '📋',
-    gradient: 'from-ink-850 to-ink-900',
-    border: 'border-ink-700',
-    accent: 'text-accent-300',
+    gradient: 'from-accent-500/15 to-sky-500/15',
+    border: 'border-accent-500/25',
+    accent: 'text-accent-400',
     templates: [
       { label: 'Executive Summary', prompt: 'Provide a concise executive summary of the key points in this document.' },
       { label: 'Key Findings', prompt: 'What are the key findings and conclusions from this document?' },
@@ -42,9 +42,9 @@ const PROMPT_TEMPLATES = [
   {
     category: 'Legal & Compliance',
     icon: '⚖️',
-    gradient: 'from-ink-850 to-ink-900',
-    border: 'border-ink-700',
-    accent: 'text-accent-300',
+    gradient: 'from-cyan-500/15 to-blue-500/15',
+    border: 'border-cyan-500/25',
+    accent: 'text-cyan-400',
     templates: [
       { label: 'Key Clauses', prompt: 'What are the most important clauses and provisions in this document?' },
       { label: 'Obligations', prompt: 'What obligations and responsibilities are defined in this document?' },
@@ -54,9 +54,9 @@ const PROMPT_TEMPLATES = [
   {
     category: 'Analysis',
     icon: '🔍',
-    gradient: 'from-ink-850 to-ink-900',
-    border: 'border-ink-700',
-    accent: 'text-accent-300',
+    gradient: 'from-emerald-500/15 to-teal-500/15',
+    border: 'border-emerald-500/25',
+    accent: 'text-emerald-400',
     templates: [
       { label: 'Data Points', prompt: 'Extract all key data points, statistics, and metrics from this document.' },
       { label: 'Definitions', prompt: 'List and explain all key terms and definitions used in this document.' },
@@ -114,6 +114,11 @@ const CodeBlock: React.FC<{ language: string; code: string }> = ({ language, cod
     <div className="my-3 rounded-xl border border-ink-700 bg-ink-950 overflow-hidden text-xs shadow-md">
       <div className="flex items-center justify-between px-3.5 py-2 bg-ink-800 border-b border-ink-700 text-ink-400 font-mono text-[11px]">
         <div className="flex items-center gap-2">
+          <div className="flex gap-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+          </div>
           <span className="font-semibold uppercase tracking-wider text-accent-400 ml-1">{language || 'code'}</span>
         </div>
         <button
@@ -125,7 +130,7 @@ const CodeBlock: React.FC<{ language: string; code: string }> = ({ language, cod
         </button>
       </div>
       <div className="p-3.5 overflow-x-auto">
-        <pre className="font-mono text-xs leading-relaxed text-ink-200 !m-0 !p-0 !bg-transparent !border-0 !rounded-none">
+        <pre className="font-mono text-xs leading-relaxed text-ink-200 m-0 p-0 bg-transparent border-0">
           <code className={`language-${normalizedLang}`}>{renderPrismTokens(tokens, 'code')}</code>
         </pre>
       </div>
@@ -319,15 +324,15 @@ const MessageBubble: React.FC<{ message: ConversationMessage }> = ({ message }) 
       </div>
 
       {/* Content */}
-      <div className={clsx('min-w-0', isUser ? 'max-w-[78%]' : 'flex-1 max-w-[88%]')}>
+      <div className={clsx('max-w-[78%] min-w-0', isUser ? 'items-end' : 'items-start')}>
         <div className={clsx(
           'rounded-2xl px-4 py-3 text-sm',
           isUser
-            ? 'bg-accent-400 text-ink-950 rounded-tr-sm font-medium'
+            ? 'bg-accent-600 text-white rounded-tr-sm shadow-sm shadow-accent-500/20'
             : 'bg-ink-800 border border-ink-700 rounded-tl-sm'
         )}>
           {isUser ? (
-            <p className="leading-relaxed whitespace-pre-wrap">{message.content}</p>
+            <p className="text-white leading-relaxed whitespace-pre-wrap">{message.content}</p>
           ) : (
             <MarkdownContent content={message.content} isStreaming={message.isStreaming} />
           )}
@@ -439,7 +444,7 @@ const ChatView: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (messages.length > 0 && shouldAutoScrollRef.current) {
+    if (shouldAutoScrollRef.current) {
       bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages.length, isLoading, isStreaming]);
@@ -749,11 +754,11 @@ const ChatView: React.FC = () => {
         {/* Welcome screen */}
         {messages.length === 0 && showTemplates && (
           <div className="animate-fade-in max-w-2xl mx-auto">
-            <div className="text-center mb-6">
+            <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 mb-5 text-[11px] font-medium uppercase tracking-[0.18em] text-accent-300 bg-accent-400/10 border border-accent-400/20 rounded-full px-3 py-1">
                 <Sparkles className="w-3 h-3" /> Grounded in your documents
               </div>
-              <h2 className="font-display text-4xl sm:text-5xl text-white leading-[1.05] mb-3">
+              <h2 className="font-display text-5xl sm:text-6xl text-white leading-[1.02] mb-4">
                 Ask your documents<br /><span className="italic text-accent-300">anything.</span>
               </h2>
               <p className="text-ink-400 text-sm leading-relaxed max-w-md mx-auto">
@@ -859,7 +864,7 @@ const ChatView: React.FC = () => {
             <button
               onClick={() => sendMessage(input)}
               disabled={!input.trim() || isBusy}
-              className="flex-shrink-0 p-2 bg-accent-400 hover:bg-accent-300 disabled:opacity-50 disabled:saturate-50 disabled:cursor-not-allowed text-ink-950 rounded-xl transition-all cursor-pointer"
+              className="flex-shrink-0 p-2 bg-accent-400 hover:bg-accent-300 disabled:opacity-40 disabled:cursor-not-allowed text-ink-950 rounded-xl transition-all shadow-sm shadow-accent-500/25 cursor-pointer"
             >
               {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             </button>
