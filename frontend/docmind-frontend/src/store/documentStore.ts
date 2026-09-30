@@ -23,7 +23,7 @@ const initialState = {
   selectedDocumentId: null as string | null,
   isLoadingDocuments: false,
   activeTab: 'chat' as const,
-  isSidebarOpen: true,
+  isSidebarOpen: typeof window === 'undefined' ? true : window.matchMedia('(min-width: 768px)').matches,
 };
 
 export const useDocumentStore = create<DocumentState>((set) => ({
