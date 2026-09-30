@@ -33,9 +33,9 @@ function getFileIcon(name: string) {
   const ext = name.split('.').pop()?.toLowerCase();
   if (ext === 'pdf') return <FileText className="w-4 h-4 text-red-400" />;
   if (ext === 'csv') return <FilePieChart className="w-4 h-4 text-green-400" />;
-  if (ext === 'md') return <FileCode className="w-4 h-4 text-purple-400" />;
+  if (ext === 'md') return <FileCode className="w-4 h-4 text-sky-400" />;
   if (ext === 'docx') return <FileImage className="w-4 h-4 text-blue-400" />;
-  return <File className="w-4 h-4 text-slate-400" />;
+  return <File className="w-4 h-4 text-ink-400" />;
 }
 
 const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
@@ -109,22 +109,22 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={handleClose} />
 
       {/* Dialog */}
-      <div className="relative z-10 w-full max-w-lg bg-[#1e293b] border border-[#334155] rounded-2xl shadow-2xl shadow-black/50 animate-fade-in">
+      <div className="relative z-10 w-full max-w-lg bg-ink-800 border border-ink-700 rounded-2xl shadow-2xl shadow-black/50 animate-fade-in">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#334155]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-ink-700">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-indigo-500/20 rounded-xl flex items-center justify-center">
-              <Upload className="w-4 h-4 text-indigo-400" />
+            <div className="w-9 h-9 bg-accent-500/20 rounded-xl flex items-center justify-center">
+              <Upload className="w-4 h-4 text-accent-400" />
             </div>
             <div>
               <h2 className="text-base font-semibold text-white">Upload Documents</h2>
-              <p className="text-xs text-slate-400">PDF · DOCX · TXT · MD · CSV</p>
+              <p className="text-xs text-ink-400">PDF · DOCX · TXT · MD · CSV</p>
             </div>
           </div>
           <button
             onClick={handleClose}
             disabled={isUploading}
-            className="p-1.5 hover:bg-[#334155] rounded-lg transition-colors text-slate-400 hover:text-white disabled:opacity-40"
+            className="p-1.5 hover:bg-ink-700 rounded-lg transition-colors text-ink-400 hover:text-white disabled:opacity-50 disabled:saturate-50"
           >
             <X className="w-4 h-4" />
           </button>
@@ -137,37 +137,37 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
             className={clsx(
               'relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-200 overflow-hidden group',
               isDragActive
-                ? 'border-indigo-500 bg-indigo-500/10'
-                : 'border-[#334155] hover:border-indigo-500/50 hover:bg-white/[0.02]'
+                ? 'border-accent-500 bg-accent-500/10'
+                : 'border-ink-700 hover:border-accent-500/50 hover:bg-white/[0.02]'
             )}
           >
             <input {...getInputProps()} />
             {/* Animated background blob */}
             <div className={clsx(
-              'absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-purple-500/5 transition-opacity duration-300',
+              'absolute inset-0 bg-gradient-to-br from-accent-500/5 via-transparent to-accent-400/5 transition-opacity duration-300',
               isDragActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
             )} />
             <div className="relative flex flex-col items-center gap-3">
               <div className={clsx(
                 'w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300',
-                isDragActive ? 'bg-indigo-500/20 scale-110' : 'bg-[#0f172a] group-hover:scale-105'
+                isDragActive ? 'bg-accent-500/20 scale-110' : 'bg-ink-900 group-hover:scale-105'
               )}>
-                <Upload className={clsx('w-6 h-6 transition-colors', isDragActive ? 'text-indigo-400' : 'text-slate-400')} />
+                <Upload className={clsx('w-6 h-6 transition-colors', isDragActive ? 'text-accent-400' : 'text-ink-400')} />
               </div>
               <div>
                 <p className="text-white font-medium">
                   {isDragActive ? '✨ Drop to upload' : 'Drag & drop files here'}
                 </p>
-                <p className="text-slate-400 text-sm mt-1">
-                  or <span className="text-indigo-400 hover:underline">click to browse</span>
+                <p className="text-ink-400 text-sm mt-1">
+                  or <span className="text-accent-400 hover:underline">click to browse</span>
                 </p>
               </div>
               <div className="flex flex-wrap gap-1.5 justify-center mt-1">
                 {[
                   { ext: 'PDF', color: 'text-red-400 bg-red-400/10' },
                   { ext: 'DOCX', color: 'text-blue-400 bg-blue-400/10' },
-                  { ext: 'TXT', color: 'text-slate-300 bg-slate-400/10' },
-                  { ext: 'MD', color: 'text-purple-400 bg-purple-400/10' },
+                  { ext: 'TXT', color: 'text-ink-300 bg-ink-400/10' },
+                  { ext: 'MD', color: 'text-sky-400 bg-sky-400/10' },
                   { ext: 'CSV', color: 'text-green-400 bg-green-400/10' },
                 ].map(({ ext, color }) => (
                   <span key={ext} className={clsx('text-xs px-2 py-0.5 rounded-full font-medium', color)}>
@@ -181,11 +181,11 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
           {/* Stats bar when files selected */}
           {files.length > 0 && (
             <div className="flex items-center justify-between mt-3 px-1">
-              <span className="text-xs text-slate-400">{files.length} file(s) · {formatBytes(totalSize)}</span>
+              <span className="text-xs text-ink-400">{files.length} file(s) · {formatBytes(totalSize)}</span>
               <button
                 onClick={() => setFiles([])}
                 disabled={isUploading}
-                className="text-xs text-slate-500 hover:text-red-400 flex items-center gap-1 transition-colors disabled:opacity-40"
+                className="text-xs text-ink-500 hover:text-red-400 flex items-center gap-1 transition-colors disabled:opacity-50 disabled:saturate-50"
               >
                 <Trash2 className="w-3 h-3" /> Clear all
               </button>
@@ -196,33 +196,33 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
           {files.length > 0 && (
             <div className="mt-2 space-y-2 max-h-56 overflow-y-auto pr-1">
               {files.map((uf) => (
-                <div key={uf.id} className="flex items-center gap-3 p-3 bg-[#0f172a] rounded-xl border border-[#334155]">
-                  <div className="p-2 bg-[#1e293b] rounded-lg flex-shrink-0">
+                <div key={uf.id} className="flex items-center gap-3 p-3 bg-ink-900 rounded-xl border border-ink-700">
+                  <div className="p-2 bg-ink-800 rounded-lg flex-shrink-0">
                     {getFileIcon(uf.file.name)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-1.5">
                       <p className="text-xs text-white font-medium truncate max-w-[200px]">{uf.file.name}</p>
                       <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
-                        <span className="text-xs text-slate-500">{formatBytes(uf.file.size)}</span>
+                        <span className="text-xs text-ink-500">{formatBytes(uf.file.size)}</span>
                         {uf.status === 'pending' && (
-                          <button onClick={() => removeFile(uf.id)} className="text-slate-500 hover:text-red-400 transition-colors">
+                          <button onClick={() => removeFile(uf.id)} className="text-ink-500 hover:text-red-400 transition-colors">
                             <X className="w-3 h-3" />
                           </button>
                         )}
-                        {uf.status === 'uploading' && <Loader2 className="w-3.5 h-3.5 text-indigo-400 animate-spin" />}
+                        {uf.status === 'uploading' && <Loader2 className="w-3.5 h-3.5 text-accent-400 animate-spin" />}
                         {uf.status === 'done' && <CheckCircle className="w-3.5 h-3.5 text-green-400" />}
                         {uf.status === 'error' && <AlertCircle className="w-3.5 h-3.5 text-red-400" />}
                       </div>
                     </div>
                     {/* Progress bar */}
-                    <div className="w-full bg-[#334155] rounded-full h-1">
+                    <div className="w-full bg-ink-700 rounded-full h-1">
                       <div
                         className={clsx(
                           'h-1 rounded-full transition-all duration-300',
                           uf.status === 'done' ? 'bg-green-500' :
                           uf.status === 'error' ? 'bg-red-500' :
-                          uf.status === 'uploading' ? 'bg-indigo-500' : 'bg-[#334155]'
+                          uf.status === 'uploading' ? 'bg-accent-500' : 'bg-ink-700'
                         )}
                         style={{ width: uf.status === 'pending' ? '0%' : `${uf.progress}%` }}
                       />
@@ -243,11 +243,11 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-end gap-3 px-5 py-4 border-t border-[#334155]">
+        <div className="flex items-center justify-end gap-3 px-5 py-4 border-t border-ink-700">
           <button
             onClick={handleClose}
             disabled={isUploading}
-            className="px-4 py-2 text-sm text-slate-400 hover:text-white border border-[#334155] hover:border-[#475569] rounded-xl transition-colors disabled:opacity-50"
+            className="px-4 py-2 text-sm text-ink-400 hover:text-white border border-ink-700 hover:border-ink-600 rounded-xl transition-colors disabled:opacity-50"
           >
             {allDone ? 'Close' : 'Cancel'}
           </button>
@@ -255,7 +255,7 @@ const UploadDialog: React.FC<UploadDialogProps> = ({ isOpen, onClose }) => {
             <button
               onClick={handleUpload}
               disabled={isUploading || pendingCount === 0}
-              className="flex items-center gap-2 px-5 py-2 text-sm font-medium bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-indigo-500/20"
+              className="flex items-center gap-2 px-5 py-2 text-sm font-medium bg-accent-400 hover:bg-accent-300 text-ink-950 rounded-xl transition-all disabled:opacity-50 disabled:saturate-50 disabled:cursor-not-allowed"
             >
               {isUploading ? (
                 <><Loader2 className="w-4 h-4 animate-spin" /> Uploading…</>
