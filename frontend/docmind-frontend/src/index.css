@@ -1,40 +1,72 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #6366f1;
-  --color-primary-dark: #4f46e5;
-  --color-primary-light: #818cf8;
-  --color-surface: #0f172a;
-  --color-surface-2: #111827;
-  --color-surface-3: #1e293b;
-  --color-border: #1e293b;
-  --color-text: #f1f5f9;
-  --color-text-muted: #94a3b8;
-  --color-accent: #06b6d4;
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
+  --font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+
+  /* Warm graphite neutrals (replaces slate) */
+  --color-ink-50:  #f7f6f3;
+  --color-ink-100: #edebe6;
+  --color-ink-200: #d9d6ce;
+  --color-ink-300: #b9b5ab;
+  --color-ink-400: #958f84;
+  --color-ink-500: #736e64;
+  --color-ink-600: #55514a;
+  --color-ink-700: #3a3833;
+  --color-ink-800: #282723;
+  --color-ink-850: #211f1c;
+  --color-ink-900: #181715;
+  --color-ink-950: #100f0d;
+
+  /* Teal accent (replaces indigo) */
+  --color-accent-50:  #effdf9;
+  --color-accent-100: #cbf8ee;
+  --color-accent-200: #98f0dd;
+  --color-accent-300: #5fe0c9;
+  --color-accent-400: #34c9b1;
+  --color-accent-500: #17a08e;
+  --color-accent-600: #0e7f72;
+  --color-accent-700: #0f665c;
+  --color-accent-800: #115149;
+  --color-accent-900: #10423b;
+  --color-accent-950: #06271f;
 }
 
 * { box-sizing: border-box; }
 
+html { color-scheme: dark; }
+
 body {
   margin: 0;
-  background-color: #0f172a;
-  color: #f1f5f9;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--color-ink-950);
+  color: var(--color-ink-50);
+  font-family: var(--font-sans);
+  font-feature-settings: 'ss01', 'cv11';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+::selection { background: rgba(52, 201, 177, 0.3); }
+
+:focus-visible { outline: 2px solid var(--color-accent-400); outline-offset: 2px; }
+
 /* ─── Scrollbars ─── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: #475569; }
+::-webkit-scrollbar-thumb { background: var(--color-ink-700); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-ink-600); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.font-display { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
+
+/* Subtle paper grain + dotted grid used on hero surfaces */
+.bg-dots {
+  background-image: radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
 
 /* ─── Animations ─── */
 @keyframes fadeIn {
@@ -71,7 +103,7 @@ body {
 .typing-dot {
   width: 6px;
   height: 6px;
-  background: #6366f1;
+  background: #34c9b1;
   border-radius: 50%;
   display: inline-block;
   animation: bounce 1.4s infinite ease-in-out;
@@ -94,7 +126,7 @@ body {
   display: inline-block;
   width: 2px;
   height: 1em;
-  background: #6366f1;
+  background: #34c9b1;
   margin-left: 2px;
   vertical-align: text-bottom;
   border-radius: 1px;
@@ -103,41 +135,41 @@ body {
 
 /* ─── Shimmer skeleton ─── */
 .shimmer {
-  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  background: linear-gradient(90deg, #282723 25%, #3a3833 50%, #282723 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
 /* ─── Glass card ─── */
 .glass {
-  background: rgba(30, 41, 59, 0.55);
+  background: rgba(40, 39, 35, 0.6);
   backdrop-filter: blur(14px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+  border: 1px solid rgba(58, 56, 51, 0.6);
 }
 
 /* ─── Prose (markdown in chat) ─── */
 .prose { max-width: none; }
 .prose p  { margin-bottom: 0.6rem; line-height: 1.65; }
-.prose h1 { font-size: 1.2rem; font-weight: 700; color: #f1f5f9; margin: 0.75rem 0 0.35rem; }
-.prose h2 { font-size: 1.05rem; font-weight: 600; color: #f1f5f9; margin: 0.65rem 0 0.3rem; }
-.prose h3 { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; margin: 0.55rem 0 0.25rem; }
+.prose h1 { font-size: 1.2rem; font-weight: 700; color: #f7f6f3; margin: 0.75rem 0 0.35rem; }
+.prose h2 { font-size: 1.05rem; font-weight: 600; color: #f7f6f3; margin: 0.65rem 0 0.3rem; }
+.prose h3 { font-size: 0.95rem; font-weight: 600; color: #edebe6; margin: 0.55rem 0 0.25rem; }
 .prose ul  { list-style-type: disc;    padding-left: 1.35rem; margin-bottom: 0.6rem; }
 .prose ol  { list-style-type: decimal; padding-left: 1.35rem; margin-bottom: 0.6rem; }
 .prose li  { margin-bottom: 0.2rem; }
-.prose strong { color: #f1f5f9; font-weight: 600; }
-.prose em     { color: #cbd5e1; }
+.prose strong { color: #f7f6f3; font-weight: 600; }
+.prose em     { color: #d9d6ce; }
 .prose code {
-  background: #0f172a;
-  color: #a78bfa;
+  background: #100f0d;
+  color: #7dd3c8;
   padding: 0.15rem 0.4rem;
   border-radius: 0.3rem;
   font-size: 0.83em;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
-  border: 1px solid #1e293b;
+  font-family: var(--font-mono);
+  border: 1px solid #282723;
 }
 .prose pre {
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: #100f0d;
+  border: 1px solid #3a3833;
   border-radius: 0.6rem;
   padding: 0.9rem 1rem;
   overflow-x: auto;
@@ -147,47 +179,47 @@ body {
   background: none;
   border: none;
   padding: 0;
-  color: #e2e8f0;
+  color: #edebe6;
 }
 .prose blockquote {
-  border-left: 3px solid #6366f1;
+  border-left: 3px solid #34c9b1;
   padding-left: 0.8rem;
-  color: #94a3b8;
+  color: #958f84;
   margin: 0.6rem 0;
   font-style: italic;
 }
-.prose hr { border-color: #334155; margin: 0.75rem 0; }
-.prose a  { color: #818cf8; text-decoration: underline; text-underline-offset: 2px; }
+.prose hr { border-color: #3a3833; margin: 0.75rem 0; }
+.prose a  { color: #5fe0c9; text-decoration: underline; text-underline-offset: 2px; }
 
 /* ─── Range input track ─── */
 input[type=range] { cursor: pointer; }
 input[type=range]::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 9999px;
-  background: #334155;
+  background: #3a3833;
 }
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #6366f1;
+  background: #34c9b1;
   margin-top: -5px;
-  box-shadow: 0 0 0 2px #0f172a, 0 0 0 3px #6366f1;
+  box-shadow: 0 0 0 2px #100f0d, 0 0 0 3px #34c9b1;
   transition: box-shadow 0.15s;
 }
 input[type=range]:hover::-webkit-slider-thumb {
-  box-shadow: 0 0 0 2px #0f172a, 0 0 0 4px #6366f1;
+  box-shadow: 0 0 0 2px #100f0d, 0 0 0 4px #34c9b1;
 }
 
 /* ─── Prism Syntax Highlighting ─── */
-.token.comment, .token.prolog, .token.doctype, .token.cdata { color: #64748b; font-style: italic; }
-.token.punctuation { color: #94a3b8; }
-.token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol, .token.deleted { color: #f43f5e; }
-.token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted { color: #34d399; }
-.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string { color: #38bdf8; }
-.token.atrule, .token.attr-value, .token.keyword { color: #818cf8; font-weight: 500; }
-.token.function, .token.class-name { color: #f59e0b; }
+.token.comment, .token.prolog, .token.doctype, .token.cdata { color: #736e64; font-style: italic; }
+.token.punctuation { color: #958f84; }
+.token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol, .token.deleted { color: #f0788c; }
+.token.selector, .token.attr-name, .token.string, .token.char, .token.builtin, .token.inserted { color: #8fd9a8; }
+.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string { color: #7cc4e8; }
+.token.atrule, .token.attr-value, .token.keyword { color: #5fe0c9; font-weight: 500; }
+.token.function, .token.class-name { color: #e9b25a; }
 .token.regex, .token.important, .token.variable { color: #fb923c; }
 .token.important, .token.bold { font-weight: bold; }
 .token.italic { font-style: italic; }
